@@ -4,55 +4,48 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Base surfaces — soft warm-white, not cream. Calm, low eye-strain for late-night use.
-        bg: "#FAFAF8",
-        surface: "#FFFFFF",
-        // A deep, warm-neutral surface for high-contrast bands (hero, milestone
-        // strip) — used sparingly, not as the default page background.
-        canvas: {
-          DEFAULT: "#171A21",
-          soft: "#22262F",
-        },
-        // Text — near-black navy-ink rather than pure black (softer on the eyes at night).
+        // Deep navy-charcoal, not true black — reads as technical/premium
+        // without matching a generic "dark mode" default.
+        bg: "#0E1420",
+        surface: "#161D2C",
+        "surface-soft": "#1C2436",
+
         ink: {
-          DEFAULT: "#14181F",
-          soft: "#5B6472",
-          faint: "#8A93A3",
-          // For text placed on the dark `canvas` surface.
-          inverse: "#F4F2ED",
-          "inverse-soft": "#B7BAC2",
+          DEFAULT: "#F3F5F0",
+          soft: "#9AA3B8",
+          faint: "#6B7385",
+          // Dark text for use ON bright accent surfaces (lime/green buttons).
+          inverse: "#0E1420",
         },
         border: {
-          DEFAULT: "#E4E1DA",
-          soft: "#EDEBE5",
+          DEFAULT: "rgba(255,255,255,0.10)",
+          soft: "rgba(255,255,255,0.06)",
         },
-        // PRIMARY — warm amber/orange. Main CTA, active progress, current
-        // challenge. The one color that means "this is the important thing."
+
+        // PRIMARY — electric lime. Reserved for TODAY, the primary CTA,
+        // and the active point on the journey trail. Nothing else uses it.
         accent: {
-          DEFAULT: "#C97A2E",
-          light: "#E2A662",
-          soft: "#F3E6CC",
-          strong: "#96691F",
+          DEFAULT: "#C6FF3D",
+          soft: "rgba(198,255,61,0.12)",
+          strong: "#A3D929",
         },
-        // SECONDARY — cool teal. Achievements, milestones, supporting
-        // information. Deliberately a cool complement to the warm primary,
-        // not another warm tone competing for the same attention.
+        // SECONDARY — coral. Achievements, milestones, supporting accents.
+        // A warm complement to the cool-bright primary.
         secondary: {
-          DEFAULT: "#2B8A82",
-          light: "#5FB3AB",
-          soft: "#DCEEEC",
-          strong: "#1F6A63",
+          DEFAULT: "#FF7A50",
+          soft: "rgba(255,122,80,0.12)",
+          strong: "#E85C34",
         },
-        // SUCCESS — completed days, successful submissions.
+        // SUCCESS — completed days/steps. Distinct from primary lime so
+        // "completed" and "today" never read as the same thing.
         positive: {
-          DEFAULT: "#5F9A66",
-          soft: "#E4EBE3",
+          DEFAULT: "#5FD68C",
+          soft: "rgba(95,214,140,0.14)",
         },
-        // WARNING — reserved for real problems (invalid input, incomplete
-        // submission) only. Never applied to a missed day — see prompt.md.
+        // WARNING — real problems only (invalid input). Never a missed day.
         caution: {
-          DEFAULT: "#B4573F",
-          soft: "#F3E1DB",
+          DEFAULT: "#FF5C5C",
+          soft: "rgba(255,92,92,0.14)",
         },
       },
       fontFamily: {
@@ -61,32 +54,29 @@ export default {
         mono: ["JetBrains Mono", "ui-monospace", "monospace"],
       },
       fontSize: {
-        // Expressive display sizes for the landing hero / section headers
-        // that genuinely warrant emphasis. Not used for every heading.
-        "display-2xl": ["2.75rem", { lineHeight: "1.05", letterSpacing: "-0.02em" }],
-        "display-xl": ["2.1rem", { lineHeight: "1.1", letterSpacing: "-0.015em" }],
+        "display-3xl": ["4.5rem", { lineHeight: "0.92", letterSpacing: "-0.03em" }],
+        "display-2xl": ["2.75rem", { lineHeight: "1.02", letterSpacing: "-0.025em" }],
+        "display-xl": ["2.1rem", { lineHeight: "1.08", letterSpacing: "-0.015em" }],
         "display-lg": ["1.5rem", { lineHeight: "1.2", letterSpacing: "-0.01em" }],
       },
       borderRadius: {
         sm: "6px",
         DEFAULT: "10px",
-        lg: "14px",
-        xl: "20px",
+        lg: "16px",
+        xl: "24px",
       },
       boxShadow: {
-        subtle: "0 1px 2px rgba(20, 24, 31, 0.04)",
-        raised: "0 4px 16px rgba(20, 24, 31, 0.08)",
-        // Colored glows — used strategically (primary CTA, today's task
-        // card, milestone markers), not on every element with that color.
-        "glow-accent": "0 8px 24px -4px rgba(201, 122, 46, 0.35)",
-        "glow-secondary": "0 8px 24px -4px rgba(43, 138, 130, 0.3)",
+        subtle: "0 1px 2px rgba(0,0,0,0.2)",
+        raised: "0 8px 24px rgba(0,0,0,0.35)",
+        "glow-accent": "0 0 32px rgba(198,255,61,0.28)",
+        "glow-secondary": "0 0 32px rgba(255,122,80,0.24)",
+        "glow-positive": "0 0 24px rgba(95,214,140,0.28)",
       },
       backgroundImage: {
-        // Gradient utilities for the handful of elements that earn one:
-        // primary CTA, active progress fill, hero glow.
-        "gradient-primary": "linear-gradient(135deg, #C97A2E 0%, #DB9A4A 100%)",
-        "gradient-secondary": "linear-gradient(135deg, #2B8A82 0%, #4CA79E 100%)",
-        "glow-radial": "radial-gradient(circle, rgba(201, 122, 46, 0.25) 0%, rgba(201, 122, 46, 0) 70%)",
+        "gradient-primary": "linear-gradient(135deg, #C6FF3D 0%, #E8FF8C 100%)",
+        "gradient-secondary": "linear-gradient(135deg, #FF7A50 0%, #FFA075 100%)",
+        "glow-radial": "radial-gradient(circle, rgba(198,255,61,0.16) 0%, rgba(198,255,61,0) 70%)",
+        "glow-radial-coral": "radial-gradient(circle, rgba(255,122,80,0.14) 0%, rgba(255,122,80,0) 70%)",
       },
     },
   },

@@ -19,13 +19,11 @@
     @apply font-display text-ink;
   }
 
-  /* Visible keyboard focus everywhere — accessibility floor, not optional. */
   :focus-visible {
     outline: 2px solid theme("colors.accent.DEFAULT");
     outline-offset: 2px;
   }
 
-  /* Respect reduced-motion preference. */
   @media (prefers-reduced-motion: reduce) {
     *,
     *::before,
@@ -38,21 +36,50 @@
 }
 
 @layer components {
-  /* Minimum comfortable tap target on mobile. */
   .tap-target {
     min-height: 44px;
   }
 }
 
-/* ---- Signature motion, used deliberately in a handful of places ----
-   Progress-strip fill, count-up stats, scroll reveal on landing, and the
-   submission success moment. Not applied globally — each use is a specific
-   answer to "this moment deserves emphasis," not decoration by default. */
+/* ---- Background atmosphere ----
+   A faint technical grid + soft radial glow, applied once behind the hero
+   and dashboard header — not a global page texture. Masked to fade at the
+   top and bottom edges so the grid dissolves into the page instead of
+   ending in a visible rectangle. */
+.bg-atmosphere {
+  background-color: theme("colors.bg");
+  background-image:
+    radial-gradient(circle at 50% -10%, rgba(198, 255, 61, 0.10) 0%, rgba(198, 255, 61, 0) 55%),
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+  background-size: auto, 28px 28px, 28px 28px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 82%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, black 12%, black 82%, transparent 100%);
+}
 
-@keyframes segment-fill {
+/* ---- Journey trail / node motion ----
+   The signature visual system: a connected trail with day-nodes. All
+   motion here communicates progress, not decoration. */
+
+@keyframes trail-draw {
+  from {
+    stroke-dashoffset: var(--trail-length, 1000);
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-trail-draw {
+  stroke-dasharray: var(--trail-length, 1000);
+  stroke-dashoffset: var(--trail-length, 1000);
+  animation: trail-draw 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+}
+
+@keyframes node-pop {
   from {
     opacity: 0;
-    transform: scale(0.4);
+    transform: scale(0.3);
   }
   to {
     opacity: 1;
@@ -60,14 +87,28 @@
   }
 }
 
-.animate-segment-fill {
-  animation: segment-fill 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+.animate-node-pop {
+  animation: node-pop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes today-glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(198, 255, 61, 0.45), 0 0 20px rgba(198, 255, 61, 0.35);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(198, 255, 61, 0), 0 0 28px rgba(198, 255, 61, 0.5);
+  }
+}
+
+.animate-today-glow {
+  animation: today-glow-pulse 2.6s ease-in-out infinite;
 }
 
 @keyframes reveal-up {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -80,21 +121,7 @@
 }
 
 .reveal.is-visible {
-  animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-@keyframes today-pulse {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(184, 134, 47, 0.18);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(184, 134, 47, 0);
-  }
-}
-
-.animate-today-pulse {
-  animation: today-pulse 2.8s ease-in-out infinite;
+  animation: reveal-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 @keyframes check-draw {
@@ -109,7 +136,7 @@
 .animate-check-draw {
   stroke-dasharray: 24;
   stroke-dashoffset: 24;
-  animation: check-draw 0.5s 0.15s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation: check-draw 0.45s 0.1s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
 @keyframes pop-in {
@@ -124,28 +151,26 @@
 }
 
 .animate-pop-in {
-  animation: pop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: pop-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes count-fill {
+  from {
+    width: 0%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .animate-segment-fill,
+  .animate-trail-draw,
+  .animate-node-pop,
+  .animate-today-glow,
   .reveal.is-visible,
-  .animate-today-pulse,
   .animate-check-draw,
   .animate-pop-in {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
     stroke-dashoffset: 0 !important;
+    box-shadow: 0 0 20px rgba(198, 255, 61, 0.35) !important;
   }
-}
-
-/* Soft ambient glow, used behind hero/focal content only — not a
-   full-page background treatment. */
-.bg-glow {
-  background-image: radial-gradient(
-    circle at 50% 0%,
-    rgba(201, 122, 46, 0.16) 0%,
-    rgba(201, 122, 46, 0) 60%
-  );
 }

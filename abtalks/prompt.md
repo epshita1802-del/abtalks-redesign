@@ -306,3 +306,82 @@ actually wanted a warning tint on missed days.
 **What I changed/rejected:** [fill in after your review]
 
 **Why:** [fill in after your review]
+
+### Full Visual Redesign — Composition Rewrite
+
+**My goal (yours, restated):** The Phase 1 token/component polish still
+read as "the same product" — narrow centered cards, same rhythm, just
+recolored. You sent a screenshot of the real abtalks.in explicitly as a
+reference for polish/energy/density only, not for literal UI, and asked
+for a genuinely new visual composition built around a "your 60-day build
+journey" concept — with a required plan-then-approve step before any code.
+
+**Prompt given to AI:** A full composition brief: new visual concept
+(connected day-journey, not cards), new color direction (your choice, not
+black+purple), restructured Landing/Dashboard/Challenge Day layouts, and a
+required 8-point design plan for approval before coding.
+
+**Plan I approved:** A connected "journey trail" (day-nodes on a line) as
+the one recurring visual system across all three screens, replacing the
+card-stack; a bold new palette (deep navy `#0E1420`, electric lime primary,
+coral secondary, green success, red-orange warning — reserved strictly for
+real problems, never a missed day); an oversized numeral-driven typographic
+treatment; and phase-appropriate restructuring of each screen's layout
+around the trail instead of a card list.
+
+**What AI did after approval:**
+- Repainted every design token to the new dark/lime/coral palette.
+- Built `JourneyTrail` (connected day-nodes, three sizes) as the shared
+  signature component, and `ProgressBar` (slim overall-progress indicator)
+  for the "where am I" context row.
+- Rewrote all three route files from scratch around the new composition:
+  Landing's hero is now a large "60" + milestone trail instead of
+  headline/text/button/card; Dashboard leads with a huge "Day 12/60"
+  numeral + trail cluster + one dominant "Today's Build" panel, with
+  streak/achievements dropped to a quiet typographic row (no borders);
+  Challenge Day is now two visually distinct BUILD (lime rail) and PROVE
+  (coral-tinted panel with a 3-step numbered stepper, live "x/3 complete")
+  stages instead of a stacked card list.
+- Removed `ProgressStrip.jsx` (the old 60-cell grid), since it's fully
+  superseded by `JourneyTrail` — flagged here rather than silently deleted.
+- Kept all functionality, routes, mocked data shape, validation logic, and
+  the A+B / streak-recovery product decisions unchanged — this was a
+  visual/compositional rewrite only.
+
+**What I accepted:** [fill in after your review]
+
+**What I changed/rejected:** [fill in after your review]
+
+**Why:** [fill in after your review]
+
+### Visual Bug Fixes — muddy background, hard grid edge, wordmark
+
+**My goal (yours, restated):** You sent screenshots showing the PROVE
+panel rendering as a muddy brown smear instead of a clean coral tint, the
+background grid cutting off in a visible hard rectangle instead of
+blending, and the wordmark reading as too muted to work as a brand mark.
+
+**What AI found:**
+- The muddy PROVE background was a real bug, not a taste issue: it was
+  built from `bg-secondary-soft/40`, which layers an opacity modifier on
+  top of a color that was already an `rgba()` value — the two alpha
+  layers compound into a murky brown instead of a clean tint. Likely also
+  the cause of steps 02/03 looking falsely "active" in the screenshot —
+  their neutral borders were being visually tinted by the muddy panel
+  behind them, not an actual state bug.
+- The grid's hard edge was because `.bg-atmosphere` painted a flat
+  rectangle with no fade — visually reads as a glitch, not atmosphere.
+
+**What AI changed:**
+- PROVE panel now uses a single flat `bg-secondary/[0.06]` wash instead of
+  stacked alpha layers.
+- `.bg-atmosphere` now has a top/bottom mask fade so the grid dissolves
+  into the page instead of cutting off in a box.
+- Wordmark recolored from muted gray to coral (secondary), bolder weight,
+  wider tracking — reads as a highlighted brand mark now.
+
+**What I accepted:** [fill in after your review]
+
+**What I changed/rejected:** [fill in after your review]
+
+**Why:** [fill in after your review]

@@ -1,8 +1,3 @@
-/**
- * Single labeled input with helper/error text. `caution` styling is used
- * only for genuine validation problems (e.g. invalid URL) — never for
- * empty-but-not-yet-required fields.
- */
 export default function FormField({
   label,
   helperText,
@@ -17,8 +12,8 @@ export default function FormField({
       </label>
       <input
         id={id}
-        className={`tap-target w-full rounded border px-3.5 text-[15px] bg-surface text-ink placeholder:text-ink-faint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
-          error ? "border-caution" : "border-border"
+        className={`tap-target w-full rounded border px-3.5 text-[15px] bg-white/[0.03] text-ink placeholder:text-ink-faint focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent ${
+          error ? "border-caution" : "border-white/10"
         }`}
         aria-invalid={Boolean(error)}
         aria-describedby={error ? `${id}-error` : undefined}
