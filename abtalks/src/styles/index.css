@@ -43,3 +43,109 @@
     min-height: 44px;
   }
 }
+
+/* ---- Signature motion, used deliberately in a handful of places ----
+   Progress-strip fill, count-up stats, scroll reveal on landing, and the
+   submission success moment. Not applied globally — each use is a specific
+   answer to "this moment deserves emphasis," not decoration by default. */
+
+@keyframes segment-fill {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-segment-fill {
+  animation: segment-fill 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.reveal {
+  opacity: 0;
+}
+
+.reveal.is-visible {
+  animation: reveal-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes today-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(184, 134, 47, 0.18);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(184, 134, 47, 0);
+  }
+}
+
+.animate-today-pulse {
+  animation: today-pulse 2.8s ease-in-out infinite;
+}
+
+@keyframes check-draw {
+  from {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-check-draw {
+  stroke-dasharray: 24;
+  stroke-dashoffset: 24;
+  animation: check-draw 0.5s 0.15s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-pop-in {
+  animation: pop-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-segment-fill,
+  .reveal.is-visible,
+  .animate-today-pulse,
+  .animate-check-draw,
+  .animate-pop-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    stroke-dashoffset: 0 !important;
+  }
+}
+
+/* Soft ambient glow, used behind hero/focal content only — not a
+   full-page background treatment. */
+.bg-glow {
+  background-image: radial-gradient(
+    circle at 50% 0%,
+    rgba(201, 122, 46, 0.16) 0%,
+    rgba(201, 122, 46, 0) 60%
+  );
+}

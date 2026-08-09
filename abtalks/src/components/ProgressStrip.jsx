@@ -10,6 +10,9 @@ import { dayStatuses } from "../data/mockData.js";
  * completed days after it. The missed day is visually present but neutral
  * (same muted tone as an upcoming day) — never red, never flagged as an
  * error. This is Idea A made visible, not just described.
+ *
+ * Segments animate in with a short stagger on mount — the one place in the
+ * app where motion carries real meaning (watching your own history render).
  */
 export default function ProgressStrip({ totalDays = 60 }) {
   const statusByDay = Object.fromEntries(
@@ -31,12 +34,13 @@ export default function ProgressStrip({ totalDays = 60 }) {
   return (
     <div>
       <div className="grid grid-cols-12 gap-1.5" role="img" aria-label={`Progress: ${dayStatuses.filter(d => d.status === "completed").length} of ${totalDays} days completed`}>
-        {days.map(({ day, status }) => (
+        {days.map(({ day, status }, i) => (
           <div
             key={day}
-            className={`aspect-square rounded-sm ${segmentClass[status]} ${
+            className={`aspect-square rounded-sm animate-segment-fill ${segmentClass[status]} ${
               status === "today" ? "scale-110" : ""
             }`}
+            style={{ animationDelay: `${Math.min(i * 12, 400)}ms` }}
             title={`Day ${day}: ${status}`}
           />
         ))}
